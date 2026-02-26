@@ -1,6 +1,9 @@
 package models;
 
-public class Client extends Person {
+import interfaces.Displayable;
+import interfaces.Finansable;
+
+public class Client extends Person implements Finansable, Displayable {
     private double money;
     private Service currentService;
 
@@ -10,12 +13,22 @@ public class Client extends Person {
         this.currentService = null;
     }
 
+    @Override
     public double getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    @Override
+    public void addMoney(double amount) {
+        this.money += amount;
+    }
+
+    @Override
+    public void removeMoney(double amount) throws Exception {
+        if (this.money < amount) {
+            throw new Exception("Недостаточно средств у Клиента");
+        }
+        this.money -= amount;
     }
 
     public Service getCurrentService() {
@@ -33,6 +46,7 @@ public class Client extends Person {
         this.currentService = null;
     }
 
+    @Override
     public void showInfo() {
         System.out.println("--- Информация о Клиенте ---");
         System.out.println("ID: " + getId());

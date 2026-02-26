@@ -1,9 +1,12 @@
 package models;
 
+import interfaces.Displayable;
+import interfaces.Finansable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Master extends Person {
+public class Master extends Person implements Finansable, Displayable {
     private double money;
     private final List<Service> activeServices;
 
@@ -13,12 +16,22 @@ public class Master extends Person {
         this.activeServices = new ArrayList<>();
     }
 
+    @Override
     public double getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    @Override
+    public void addMoney(double amount) {
+        this.money += amount;
+    }
+
+    @Override
+    public void removeMoney(double amount) throws Exception {
+        if (this.money < amount) {
+            throw new Exception("Недостаточно средств у Мастера");
+        }
+        this.money -= amount;
     }
 
     public void addService(Service service) {
@@ -33,6 +46,7 @@ public class Master extends Person {
         return activeServices.size();
     }
 
+    @Override
     public void showInfo() {
         System.out.println("--- Информация о Мастере ---");
         System.out.println("ID: " + getId());
