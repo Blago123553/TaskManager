@@ -2,8 +2,9 @@ package models;
 
 import interfaces.Displayable;
 import interfaces.Finansable;
+import interfaces.Serviceable;
 
-public class Client extends Person implements Finansable, Displayable {
+public class Client extends Person implements Finansable, Serviceable, Displayable {
     private double money;
     private Service currentService;
 
@@ -31,10 +32,12 @@ public class Client extends Person implements Finansable, Displayable {
         this.money -= amount;
     }
 
+    @Override
     public Service getCurrentService() {
         return currentService;
     }
 
+    @Override
     public void setCurrentService(Service service) throws Exception {
         if (this.currentService != null) {
             throw new Exception("Клиент уже заказал услугу: " + this.currentService.getServiceName());
@@ -42,6 +45,7 @@ public class Client extends Person implements Finansable, Displayable {
         this.currentService = service;
     }
 
+    @Override
     public void clearService() {
         this.currentService = null;
     }

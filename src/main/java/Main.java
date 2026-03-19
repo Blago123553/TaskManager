@@ -21,12 +21,19 @@ public class Main {
 
         paymentService.processOrder(clientIvan, masterAlex, repairPhone);
 
-        System.out.println("\n=== ПОСЛЕ ПЕРВОГО ЗАКАЗА ===");
         masterAlex.showInfo();
         clientIvan.showInfo();
 
+        System.out.println("\n>>> Тест: повторный заказ клиентом (ошибка)");
         paymentService.processOrder(clientIvan, masterAlex, installWindows);
+
+        System.out.println("\n>>> Тест: заказ без денег (ошибка)");
         paymentService.processOrder(clientMaria, masterAlex, installWindows);
+
+        paymentService.completeOrder(clientIvan, masterAlex, repairPhone);
+        
+        System.out.println("\n>>> Тест: новый заказ после завершения");
+        paymentService.processOrder(clientIvan, masterAlex, installWindows);
 
         System.out.println("\n=== ФИНАЛЬНОЕ СОСТОЯНИЕ ===");
         masterAlex.showInfo();
